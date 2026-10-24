@@ -301,6 +301,7 @@ export class DolphinManager {
       enableNetplayReplays: this.settingsManager.getEnableNetplayReplays(),
       enableMonthlySubfolders: this.settingsManager.getEnableMonthlySubfolders(),
       enableJukebox: this.settingsManager.getEnableJukebox(),
+      enableQuickChat: this.settingsManager.getEnableQuickChat(),
     });
   }
 
@@ -327,6 +328,11 @@ export class DolphinManager {
       this.settingsManager.get().settings.enableJukebox,
       newSettings.enableJukebox,
       (val) => this.settingsManager.updateSetting("enableJukebox", val),
+    );
+    await this._updateLauncherSetting(
+      this.settingsManager.get().settings.enableQuickChat,
+      newSettings.enableQuickChat,
+      (val) => this.settingsManager.updateSetting("enableQuickChat", val),
     );
   }
 

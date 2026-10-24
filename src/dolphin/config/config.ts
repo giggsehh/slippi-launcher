@@ -9,6 +9,7 @@ export type SyncedDolphinSettings = {
   enableNetplayReplays: boolean;
   enableMonthlySubfolders: boolean;
   enableJukebox: boolean;
+  enableQuickChat: string;
 };
 
 export async function addGamePath(iniFile: IniFile, gameDir: string): Promise<void> {
@@ -26,6 +27,7 @@ export async function setSlippiMainlineSettings(
   const enableNetplayReplays = convertBooleanToIniVal(options.enableNetplayReplays);
   const enableMonthlySubfolders = convertBooleanToIniVal(options.enableMonthlySubfolders);
   const enableJukebox = convertBooleanToIniVal(options.enableJukebox);
+  const enableQuickChat = options.enableQuickChat!;
   const slippiSection = iniFile.getOrCreateSection("Slippi");
 
   if (options.replayPath !== undefined) {
@@ -40,6 +42,9 @@ export async function setSlippiMainlineSettings(
   if (options.enableJukebox !== undefined) {
     slippiSection.set("EnableJukebox", enableJukebox);
   }
+  if (options.enableQuickChat !== undefined) {
+    slippiSection.set("SlippiEnableQuickChat", enableQuickChat!);
+  }
 
   await iniFile.save();
 }
@@ -48,7 +53,7 @@ export async function setSlippiIshiiSettings(iniFile: IniFile, options: Partial<
   const enableNetplayReplays = convertBooleanToIniVal(options.enableNetplayReplays);
   const enableMonthlySubfolders = convertBooleanToIniVal(options.enableMonthlySubfolders);
   const enableJukebox = convertBooleanToIniVal(options.enableJukebox);
-
+  const enableQuickChat = options.enableQuickChat!;
   const coreSection = iniFile.getOrCreateSection("Core");
   if (options.replayPath !== undefined) {
     coreSection.set("SlippiReplayDir", options.replayPath);
@@ -62,6 +67,9 @@ export async function setSlippiIshiiSettings(iniFile: IniFile, options: Partial<
   if (options.enableJukebox !== undefined) {
     coreSection.set("SlippiJukeboxEnabled", enableJukebox);
   }
+  if (options.enableQuickChat !== undefined) {
+    coreSection.set("SlippiEnableQuickChat", enableQuickChat!);
+  }
   await iniFile.save();
 }
 
@@ -72,8 +80,8 @@ export async function getSlippiMainlineSettings(iniFile: IniFile): Promise<Synce
   const enableNetplayReplays = slippiSection.get("SaveReplays", "True") === "True";
   const enableMonthlySubfolders = slippiSection.get("ReplayMonthlyFolders", "True") === "True";
   const enableJukebox = slippiSection.get("EnableJukebox", "True") === "True";
-
-  return { replayPath, enableNetplayReplays, enableMonthlySubfolders, enableJukebox };
+  const enableQuickChat = slippiSection.get("EnableQuickChat", "0");
+  return { replayPath, enableNetplayReplays, enableMonthlySubfolders, enableJukebox, enableQuickChat };
 }
 
 export async function getSlippiIshiiSettings(iniFile: IniFile): Promise<SyncedDolphinSettings> {
@@ -83,8 +91,9 @@ export async function getSlippiIshiiSettings(iniFile: IniFile): Promise<SyncedDo
   const enableNetplayReplays = coreSection.get("SlippiSaveReplays", "True") === "True";
   const enableMonthlySubfolders = coreSection.get("SlippiReplayMonthFolders", "False") === "True";
   const enableJukebox = coreSection.get("SlippiJukeboxEnabled", "True") === "True";
+  const enableQuickChat = coreSection.get("SlippiEnableQuickChat", "0");
 
-  return { replayPath, enableNetplayReplays, enableMonthlySubfolders, enableJukebox };
+  return { replayPath, enableNetplayReplays, enableMonthlySubfolders, enableJukebox, enableQuickChat };
 }
 
 export async function setBootToCss(globalIni: IniFile, localIni: IniFile, enable: boolean): Promise<void> {

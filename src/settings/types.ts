@@ -61,6 +61,7 @@ export interface SettingsSchema {
   // Dolphin settings
   useNetplayBeta: boolean;
   usePlaybackBeta: boolean;
+  enableQuickChat: string;
 
   // Spectate settings
   enableSpectateRemoteControl: boolean;

@@ -131,6 +131,10 @@ export class SettingsManager extends EventEmitter {
     return this.get().settings.useMonthlySubfolders;
   }
 
+  getEnableQuickChat(): string {
+    return this.get().settings.enableQuickChat;
+  }
+
   getEnableJukebox(): boolean {
     return this.get().settings.enableJukebox;
   }

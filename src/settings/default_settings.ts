@@ -36,6 +36,7 @@ export const defaultAppSettings: AppSettings = {
     enableLocationAccess: false,
     useNetplayBeta: false,
     usePlaybackBeta: false,
+    enableQuickChat: "0",
     enableSpectateRemoteControl: false,
     spectateRemoteControlPort: 49809,
     enableRankDisplay: true,

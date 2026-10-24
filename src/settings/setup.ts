@@ -84,6 +84,11 @@ function setupSettingsSubscriptions(settingsManager: SettingsManager, dolphinMan
     await installation.updateSettings({ enableJukebox });
   });
 
+  settingsManager.onSettingChange("enableQuickChat", async (enableQuickChat) => {
+    const installation = dolphinManager.getInstallation(DolphinLaunchType.NETPLAY);
+    await installation.updateSettings({ enableQuickChat });
+  });
+
   settingsManager.onSettingChange("autoUpdateLauncher", (autoUpdateLauncher) => {
     autoUpdater.autoInstallOnAppQuit = autoUpdateLauncher;
   });

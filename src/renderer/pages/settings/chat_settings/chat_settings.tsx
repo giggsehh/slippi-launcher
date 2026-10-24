@@ -2,7 +2,9 @@ import { css } from "@emotion/react";
 import React from "react";
 
 import { AuthGuard } from "@/components/auth_guard";
+import { Dropdown } from "@/components/form";
 import { useAccount } from "@/lib/hooks/use_account";
+import { useEnableQuickChat } from "@/lib/hooks/use_settings";
 import type { AuthUser } from "@/services/auth/types";
 
 import { SettingItem } from "../setting_item_section";
@@ -57,8 +59,24 @@ const ChatConfigSettings = React.memo(({ user }: { user: AuthUser }) => {
     );
   }, [dirty, discardLocalChanges, loading, submitChatMessages]);
 
+  const [quickChatSetting, setQuickChatSetting] = useEnableQuickChat();
+
+  type quickChatValue = "0" | "1" | "2";
+  const quickChatValues: { value: quickChatValue; label: string }[] = [
+    { value: "0", label: "Enabled" },
+    { value: "1", label: "Direct Only" },
+    { value: "2", label: "Disabled" },
+  ];
+
   return (
     <>
+      <SettingItem name={Messages.quickChat()} description={Messages.quickChatDescription()}>
+        <Dropdown
+          value={quickChatSetting}
+          options={quickChatValues}
+          onChange={(selected) => setQuickChatSetting(selected)}
+        />
+      </SettingItem>
       <ChatMessagesInput
         messages={localMessages}
         updateMessages={setLocalMessages}
