@@ -14,6 +14,7 @@ export const ChatSettingsMessages = {
   quickChatDescription: () => "Select quick chat setting",
   chatMessages: () => "Chat Messages",
   chatMessagesDescription: () => "Chat messages to use for netplay",
-
+  chatSettings: () => "Chat Settings",
+  chatSettingsDescription: () => "Configure quick chat settings & chat messages.",
   pleaseLoginToUseFeature: () => "Please log in to use this feature.",
 };

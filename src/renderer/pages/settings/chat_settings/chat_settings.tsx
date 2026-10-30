@@ -1,8 +1,10 @@
 import { css } from "@emotion/react";
+import Typography from "@mui/material/Typography/Typography";
 import React from "react";
 
 import { AuthGuard } from "@/components/auth_guard";
 import { Dropdown } from "@/components/form";
+import { useDolphinStore } from "@/lib/dolphin/use_dolphin_store";
 import { useAccount } from "@/lib/hooks/use_account";
 import { useEnableQuickChat } from "@/lib/hooks/use_settings";
 import type { AuthUser } from "@/services/auth/types";
@@ -59,6 +61,7 @@ const ChatConfigSettings = React.memo(({ user }: { user: AuthUser }) => {
     );
   }, [dirty, discardLocalChanges, loading, submitChatMessages]);
 
+  const netplayDolphinOpen = useDolphinStore((store) => store.netplayOpened);
   const [quickChatSetting, setQuickChatSetting] = useEnableQuickChat();
 
   type quickChatValue = "0" | "1" | "2";
@@ -75,14 +78,18 @@ const ChatConfigSettings = React.memo(({ user }: { user: AuthUser }) => {
           value={quickChatSetting}
           options={quickChatValues}
           onChange={(selected) => setQuickChatSetting(selected)}
+          disabled={netplayDolphinOpen}
         />
       </SettingItem>
-      <ChatMessagesInput
-        messages={localMessages}
-        updateMessages={setLocalMessages}
-        availableMessages={availableMessages}
-        user={{ uid: user.uid, subLevel: userData?.activeSubscription.level ?? "NONE" }}
-      />
+
+      <SettingItem name={Messages.chatMessages()} description={Messages.chatMessagesDescription()}>
+        <ChatMessagesInput
+          messages={localMessages}
+          updateMessages={setLocalMessages}
+          availableMessages={availableMessages}
+          user={{ uid: user.uid, subLevel: userData?.activeSubscription.level ?? "NONE" }}
+        />
+      </SettingItem>
       {footer}
     </>
   );
@@ -95,12 +102,12 @@ export const ChatSettings = React.memo(() => {
         min-width: 450px;
       `}
     >
-      <SettingItem name={Messages.chatMessages()} description={Messages.chatMessagesDescription()}>
-        <AuthGuard
-          fallback={<div>{Messages.pleaseLoginToUseFeature()}</div>}
-          render={(user) => <ChatConfigSettings user={user} />}
-        />
-      </SettingItem>
+      <Typography variant="h5">{Messages.chatSettings()}</Typography>
+      <Typography variant="caption">{Messages.chatSettingsDescription()}</Typography>
+      <AuthGuard
+        fallback={<div>{Messages.pleaseLoginToUseFeature()}</div>}
+        render={(user) => <ChatConfigSettings user={user} />}
+      />
     </div>
   );
 });

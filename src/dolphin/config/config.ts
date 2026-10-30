@@ -43,7 +43,7 @@ export async function setSlippiMainlineSettings(
     slippiSection.set("EnableJukebox", enableJukebox);
   }
   if (options.enableQuickChat !== undefined) {
-    slippiSection.set("SlippiEnableQuickChat", enableQuickChat!);
+    slippiSection.set("EnableQuickChat", enableQuickChat!);
   }
 
   await iniFile.save();

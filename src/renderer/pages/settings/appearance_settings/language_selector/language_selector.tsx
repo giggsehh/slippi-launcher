@@ -29,7 +29,12 @@ export const LanguageSelector = React.memo(() => {
 
   return (
     <SettingItem name={Messages.appLanguage()} description={Messages.appLanguageDescription()}>
-      <Dropdown value={currentLanguage} options={sortedSupportedLanguages} onChange={handleLanguageChange} />
+      <Dropdown
+        value={currentLanguage}
+        options={sortedSupportedLanguages}
+        disabled={false}
+        onChange={handleLanguageChange}
+      />
     </SettingItem>
   );
 });
