@@ -27,7 +27,6 @@ export async function setSlippiMainlineSettings(
   const enableNetplayReplays = convertBooleanToIniVal(options.enableNetplayReplays);
   const enableMonthlySubfolders = convertBooleanToIniVal(options.enableMonthlySubfolders);
   const enableJukebox = convertBooleanToIniVal(options.enableJukebox);
-  const enableQuickChat = options.enableQuickChat!;
   const slippiSection = iniFile.getOrCreateSection("Slippi");
 
   if (options.replayPath !== undefined) {
@@ -43,7 +42,7 @@ export async function setSlippiMainlineSettings(
     slippiSection.set("EnableJukebox", enableJukebox);
   }
   if (options.enableQuickChat !== undefined) {
-    slippiSection.set("EnableQuickChat", enableQuickChat!);
+    slippiSection.set("EnableQuickChat", options.enableQuickChat);
   }
 
   await iniFile.save();
@@ -53,7 +52,6 @@ export async function setSlippiIshiiSettings(iniFile: IniFile, options: Partial<
   const enableNetplayReplays = convertBooleanToIniVal(options.enableNetplayReplays);
   const enableMonthlySubfolders = convertBooleanToIniVal(options.enableMonthlySubfolders);
   const enableJukebox = convertBooleanToIniVal(options.enableJukebox);
-  const enableQuickChat = options.enableQuickChat!;
   const coreSection = iniFile.getOrCreateSection("Core");
   if (options.replayPath !== undefined) {
     coreSection.set("SlippiReplayDir", options.replayPath);
@@ -68,7 +66,7 @@ export async function setSlippiIshiiSettings(iniFile: IniFile, options: Partial<
     coreSection.set("SlippiJukeboxEnabled", enableJukebox);
   }
   if (options.enableQuickChat !== undefined) {
-    coreSection.set("SlippiEnableQuickChat", enableQuickChat!);
+    coreSection.set("SlippiEnableQuickChat", options.enableQuickChat);
   }
   await iniFile.save();
 }
